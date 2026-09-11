@@ -442,6 +442,10 @@ h1 {
   text-align: left;
 }
 
+.mobile-stats-button {
+  display: none;
+}
+
 .creator-panel {
   position: fixed;
   top: 0;
@@ -719,13 +723,14 @@ h1 {
 
   h1 {
     width: auto;
-    max-width: calc(100vw - 200px);
+    max-width: calc(100vw - 190px);
     margin: 0;
     transform: none;
-    font-size: clamp(42px, 11vw, 52px);
+    font-size: clamp(30px, 9vw, 42px);
     line-height: 1;
     letter-spacing: 1px;
     white-space: nowrap;
+    padding-left: 10px;
   }
 
   .tagline {
@@ -795,7 +800,7 @@ h1 {
     z-index: 110;
 
     display: block;
-    width: 105px;
+    width: 40px;
     margin: 0;
   }
 
@@ -831,6 +836,30 @@ h1 {
       0 0 0 1px rgba(255, 255, 255, 0.03);
 
     backdrop-filter: blur(12px);
+  }
+
+  .desktop-stats-button {
+    display: none;
+  }
+
+  .mobile-stats-button {
+    display: flex;
+
+    width: 34px;
+    height: 34px;
+
+    padding: 0;
+    margin: 0;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 18px;
+    line-height: 1;
+
+    border-radius: 8px;
+
+    box-shadow: none;
   }
 
   .timer-box {
@@ -1050,6 +1079,10 @@ h1 {
 }
 
 @media (min-width: 400px) and (max-width: 500px) {
+  h1 {
+    max-width: calc(100vw - 190px);
+    font-size: clamp(30px, 9vw, 42px);
+  }
   .board {
     --tile-size: 58px;
     --board-gap: 7px;
@@ -1073,16 +1106,17 @@ h1 {
   h1 {
     max-width: calc(100vw - 190px);
     font-size: clamp(30px, 9vw, 42px);
+    padding-left: 20px;
   }
 
   .mode-select-mobile {
-    width: 92px;
-    font-size: 11px;
+    width: 95px;
+    font-size: 10px;
   }
 
   .stats-column,
   .stats-button {
-    width: 92px;
+    width: 34px;
   }
 
   .board {

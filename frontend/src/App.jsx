@@ -1069,7 +1069,7 @@ function App() {
             onChange={(e) => changeMode(e.target.value)}
           >
             <option value="classic">Classic</option>
-            <option value="timed">Speed Run</option>
+            <option value="timed">Speed</option>
             <option value="speed">Daily</option>
           </select>
 
@@ -1252,10 +1252,18 @@ function App() {
         
         <div className="stats-column">
           <button
-            className="stats-button"
+            className="stats-button desktop-stats-button"
             onClick={() => setShowStats(!showStats)}
           >
             My Stats
+          </button>
+
+          <button
+            className="stats-button mobile-stats-button"
+            onClick={() => setShowStats(!showStats)}
+            aria-label="Statistics"
+          >
+            📊
           </button>
 
           {showStats && (
