@@ -177,6 +177,8 @@ function App() {
     return !localStorage.getItem("speedHelpShown");
   });
 
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
+
   const [showAbout, setShowAbout] = useState(false);
   
   const [savedGames, setSavedGames] = useState(() => {
@@ -837,9 +839,15 @@ function App() {
   function handleLetter(letter) {
     if (gameOver) return;
 
+    if (message && !gameOver) {
+      setMessage("");
+    }
+
+
     if (mode === "speed" && !creatorMode && lastResult && lastResult.date === getTodayKey()) {
       return;
     }
+
 
     if (
       (mode === "speed" || mode === "timed")
@@ -855,6 +863,10 @@ function App() {
 
   function handleBackspace() {
     if (gameOver) return;
+
+    if (message && !gameOver) {
+      setMessage("");
+    }
 
     setCurrentGuess((prev) => prev.slice(0, -1));
   }
@@ -1063,15 +1075,47 @@ function App() {
               
             </div>
           )}
-          <select
-            className="mode-select-mobile"
-            value={mode}
-            onChange={(e) => changeMode(e.target.value)}
+          <button
+            className="mobile-menu-button"
+            onClick={() => setShowMobileMenu(!showMobileMenu)}
           >
-            <option value="classic">Classic</option>
-            <option value="timed">Speed</option>
-            <option value="speed">Daily</option>
-          </select>
+            ☰
+          </button>
+          {showMobileMenu && (
+            <div className="mobile-menu-panel">
+
+              <button
+                onClick={() => {
+                  changeMode("classic");
+                  setShowMobileMenu(false);
+                }}
+                className={mode === "classic" ? "active" : ""}
+              >
+                Classic
+              </button>
+
+              <button
+                onClick={() => {
+                  changeMode("timed");
+                  setShowMobileMenu(false);
+                }}
+                className={mode === "timed" ? "active" : ""}
+              >
+                Speed Run
+              </button>
+
+              <button
+                onClick={() => {
+                  changeMode("speed");
+                  setShowMobileMenu(false);
+                }}
+                className={mode === "speed" ? "active" : ""}
+              >
+                Daily
+              </button>
+
+            </div>
+          )}
 
           <div className="mode-switcher vertical">
             <button
@@ -1096,7 +1140,10 @@ function App() {
             </button>
           </div>
 
-          {(mode === "speed" || mode === "timed") && (
+          {(mode === "timed" ||
+            (mode === "speed" &&
+              !(lastResult &&
+                lastResult.date === getTodayKey()))) && (
             <div className="timer-box">
               <div className="speed-timer-label">
                 Timer
@@ -1227,27 +1274,31 @@ function App() {
             )}
           </div>
 
-          <div className="keyboard">
-            {keyboardRows.map((row, rowIndex) => (
-              <div className="keyboard-row" key={rowIndex}>
-                {row.map((key) => {
-                  const status = keyboardStatuses[key] || "";
+          {!(mode === "speed" &&
+            lastResult &&
+            lastResult.date === getTodayKey()) && (
+              <div className="keyboard">
+              {keyboardRows.map((row, rowIndex) => (
+                <div className="keyboard-row" key={rowIndex}>
+                  {row.map((key) => {
+                    const status = keyboardStatuses[key] || "";
 
-                  return (
-                    <button
-                      key={key}
-                      className={`key ${status} ${
-                        key === "ENTER" || key === "BACK" ? "wide-key" : ""
-                      }`}
-                      onClick={() => handleKeyboardClick(key)}
-                    >
-                      {key === "BACK" ? "⌫" : key}
-                    </button>
-                  );
-                })}
-              </div>
-            ))}
-          </div>
+                    return (
+                      <button
+                        key={key}
+                        className={`key ${status} ${
+                          key === "ENTER" || key === "BACK" ? "wide-key" : ""
+                        }`}
+                        onClick={() => handleKeyboardClick(key)}
+                      >
+                        {key === "BACK" ? "⌫" : key}
+                      </button>
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
         
         <div className="stats-column">
