@@ -784,7 +784,7 @@ h1 {
     width: 100%;
     max-width: 100%;
 
-    min-height: calc(100dvh - 70px);
+    min-height: calc(100dvh - 100px);
 
     display: flex;
     flex-direction: column;
@@ -1198,7 +1198,7 @@ h1 {
 
   .footer-links {
     margin-top: auto;
-    padding-bottom: 12px;
+    padding-bottom: 0px;
   }
 }
 
